@@ -36,16 +36,33 @@ class User{
 			$msg = "<div class='alert alert-danger'><strong>ERROR !</strong>Email Address already Exist!</div>";
 			return $msg;
 		}
+
+		$sql = "INSERT INTO tbl_user (name, username, email, password) VALUES (:name, :username, :email, :password)";
+		$query = $this->db->pdo->prepare($sql);
+		$query->bindValue(':name',$name);
+		$query->bindValue(':username',$username);
+		$query->bindValue(':email',$email);
+		$query->bindValue(':password',$password);
+		$result = $query->execute();
+		if ($result) {
+			$msg = "<div class='alert alert-success'><strong>SUCCESS !</strong>Thank You, You have been registered.</div>";
+			return $msg;
+		}
+		else
+		{
+			$msg = "<div class='alert alert-danger'><strong>SORRY !</strong>There some problem in your data.!</div>";
+			return $msg;
+		}
 		
 	}
 
 	public function emailCheck($email)
 	{
-		$sql = "SELECT email FROM tbl_user WHERE email =:email";
+		$sql = "SELECT email FROM tbl_user WHERE email = :email";
 		$query = $this->db->pdo->prepare($sql);
 		$query->bindValue(':email',$email);
 		$query->execute();
-		if ($query->execute() > 0) {
+		if ($query->rowCount() > 0) {
 			return true;
 		}
 		else{
