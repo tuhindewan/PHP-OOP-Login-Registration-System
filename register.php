@@ -1,29 +1,51 @@
-<?php include 'inc/header.php';?>
+<?php 
+include 'inc/header.php';
+include 'lib/User.php';
+?>
+<?php 
+
+$user = new User();
+
+if (isset($_POST['register'])) {
+  $userRegi = $user->userRegistration($_POST);
+}
+
+
+ ?>
                   <div class="panel panel-default">
                           <div class="panel-heading">
                          <h2>User Registration</h2>
                           </div>
                             <div class="panel-body">
                             <div style="max-width: 600px;margin: 0 auto;">
-                            <form>
+                            <?php 
+
+                            if (isset($userRegi)) {
+                               echo $userRegi;
+                            }
+
+                             ?>
+
+                            <form action="" method="post">
                                 <div class="form-group">
                                     <label for="name">Full Name:</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name" required="">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name">
                                   </div>
                                   <div class="form-group">
                                     <label for="username">Username:</label>
-                                    <input type="text" class="form-control" id="username" name="username" placeholder="Type Username" required="">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Type Username">
                                   </div>
                                 <div class="form-group">
                                     <label for="email">Email address:</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required="">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
                                   </div>
                                   <div class="form-group">
                                     <label for="password">Password:</label>
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="Type Password" required="">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Type Password">
                                   </div>
                                   <button type="submit" class="btn btn-success" name="register">Submit</button>
                             </form>
+
                             </div>
                             </div>
                    </div>
