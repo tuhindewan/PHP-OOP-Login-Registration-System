@@ -112,7 +112,23 @@ class User{
 		return $result;
 	}
 
-	
+	public function getuserdata()
+	{
+		$sql = "SELECT * FROM tbl_user ORDER BY id DESC";
+		$query = $this->db->pdo->prepare($sql);
+		$query->execute();
+		$result = $query->fetchAll();
+		return $result;
+	}
+	public function getUserById($userid)
+	{
+		$sql = "SELECT * FROM tbl_user WHERE id = '$userid' ";
+		$query = $this->db->pdo->prepare($sql);
+		$query->execute();
+		$result = $query->fetchAll();
+		return $result;
+	}
+
 }
 
 

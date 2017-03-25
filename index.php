@@ -13,15 +13,15 @@ if (isset($loginmsg)) {
  ?>
                   <div class="panel panel-default">
                           <div class="panel-heading">
-                         <h2>User List <span class="pull-right"><strong>Welcome! </strong>
+                         <h2>User List <span class="pull-right">Welcome! <strong>
                          <?php 
-                         $name = Session::get("name");
+                         $name = Session::get("username");
                            if (isset($name)) {
                              echo $name;
                          }
                          Session::set("loginmsg"," ");
                           ?>
-                         </span></h2>
+                         </strong></span></h2>
                           </div>
                             <div class="panel-body">
                               <table class="table table-striped">
@@ -32,34 +32,36 @@ if (isset($loginmsg)) {
                               <th width="20%">Email Address</th>
                               <th width="20%">Action</th>
                               </tr>
+                              <?php 
+
+                              $user = new User();
+                              $userdata = $user->getuserdata();
+                              if ($userdata) {
+                                $i=0;
+                                foreach ($userdata as $value) {
+                                $i++;
+                               ?>
                               <tr>
-                                <td>01</td>
-                                <td>tuhin</td>
-                                <td>tuhin</td>
-                                <td>tuhin@gmail.com</td>
+                                <td><?php echo $i; ?></td>
+                                <td><?php echo $value['name']; ?></td>
+                                <td><?php echo $value['username']; ?></td>
+                                <td><?php echo $value['email']; ?></td>
                                 <td>
-                                  <a class="btn btn-primary" href="profile.php?id=1">view</a>
+                                  <a class="btn btn-primary" href="profile.php?id=<?php echo $value['id']; ?>">view</a>
                                 </td>
                               </tr>
-                              <tr>
-                                <td>01</td>
-                                <td>tuhin</td>
-                                <td>tuhin</td>
-                                <td>tuhin@gmail.com</td>
-                                <td>
-                                  <a class="btn btn-primary" href="profile.php?id=1">view</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>01</td>
-                                <td>tuhin</td>
-                                <td>tuhin</td>
-                                <td>tuhin@gmail.com</td>
-                                <td>
-                                  <a class="btn btn-primary" href="profile.php?id=1">view</a>
-                                </td>
-                              </tr>
+                              <?php 
+
+                                 }
+                              }
+                              else
+                              {           
+                               ?>
+                              <td><tr><h2>User Data Not Found.....</h2></tr></td>
+                                <?php                                 
+                              } ?>
                               </table>
+                              
                             </div>
                    </div>
 <?php include 'inc/footer.php';?>
