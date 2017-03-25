@@ -4,9 +4,24 @@ include 'lib/User.php';
 $user = new User();
 
 ?>
+
+<?php 
+
+$loginmsg = Session::get("loginmsg");
+if (isset($loginmsg)) {
+  echo $loginmsg;}
+ ?>
                   <div class="panel panel-default">
                           <div class="panel-heading">
-                         <h2>User List <span class="pull-right"><strong>Welcome! </strong>Tuhin</span></h2>
+                         <h2>User List <span class="pull-right"><strong>Welcome! </strong>
+                         <?php 
+                         $name = Session::get("name");
+                           if (isset($name)) {
+                             echo $name;
+                         }
+                         Session::set("loginmsg"," ");
+                          ?>
+                         </span></h2>
                           </div>
                             <div class="panel-body">
                               <table class="table table-striped">

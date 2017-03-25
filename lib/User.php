@@ -70,6 +70,47 @@ class User{
 		}
 
 	}
+
+	public function userLogin($data)
+	{
+		
+		$password = md5($data['password']);
+		$email    = $data['email'];
+		$chk_mail = $this->emailCheck($email);
+
+		if ($password=='' OR $email=='') {
+			$msg = "<div class='alert alert-danger'><strong>ERROR !</strong>Field Must Not Be Empty</div>";
+			return $msg;
+		}
+		if (filter_var($email,FILTER_VALIDATE_EMAIL)===false) {
+			$msg = "<div class='alert alert-danger'><strong>ERROR !</strong>Email Address is not valid!</div>";
+			return $msg;
+		}
+		$result = $this->getloginUser($email,$password);
+		if ($result) {
+			Session::init();
+			Session::set("login",true);
+			Session::set("id",$result->id);
+			Session::set("name",$result->name);
+			Session::set("username",$result->username);
+			Session::set("loginmsg","<div class='alert alert-success'><strong>SUCCESS !</strong>You are LoggedIn.</div>");
+			header("Location:index.php");
+		}else{
+			$msg = "<div class='alert alert-danger'><strong>ERROR !</strong>Data not Found!</div>";
+			return $msg;
+		}
+	}
+
+	public function getloginUser($email,$password)
+	{
+		$sql = "SELECT * FROM tbl_user WHERE email = :email AND password = :password LIMIT 1";
+		$query = $this->db->pdo->prepare($sql);
+		$query->bindValue(':email',$email);
+		$query->bindValue(':password',$password);
+		$query->execute();
+		$result = $query->fetch(PDO::FETCH_OBJ);
+		return $result;
+	}
 }
 
 
