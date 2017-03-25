@@ -5,6 +5,7 @@ include 'lib/User.php';
 <?php 
 
 $user = new User();
+Session::checklogin();
 
 if (isset($_POST['login'])) {
   $userLogin = $user->userLogin($_POST);

@@ -27,6 +27,27 @@ class Session{
 			return false;
 		}
 	}
+	public static function destroy()
+	{
+		session_destroy();
+		session_unset();
+		header("Location:login.php");
+	}
+
+	public static function checkSession()
+	{
+		if (self::get("login") == false) {
+			self::destroy();
+			header("location:login.php");
+		}
+	}
+	public static function checklogin(){
+		if (self::get("login") == true) {
+			
+			header("location:index.php");
+		}
+	}
+
 
 }
 

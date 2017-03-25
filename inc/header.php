@@ -2,6 +2,14 @@
 include_once('lib/Session.php');
 Session::init();
 ?>
+<?php
+
+if (isset($_GET['action']) && $_GET['action'] == 'logout') {
+  Session::destroy();
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,10 +31,18 @@ Session::init();
                   <a class="navbar-brand" href="index.php">Login Registration System</a>
                 </div>
                   <ul class="nav navbar-nav navbar-right">
-                        <li><a href="profile.php">Profile</a></li>
-                        <li><a href="register.php">Registration</a></li>
+                  <?php 
+                  $id = Session::get("id");
+                  $userlogin = Session::get("login");
+                  if ($userlogin == true) {
+                   ?>
+                  <li><a href="profile.php?id=<?php echo $id;?>">Profile</a></li>
+                  <li><a href="?action=logout">Logout</a></li>
+
+                  <?php }else{ ?>
                         <li><a href="login.php">Login</a></li>
-                        <li><a href="#">Logout</a></li>
+                        <li><a href="register.php">Registration</a></li>
+                        <?php } ?>
                       </ul>
                 </div>
           </nav>

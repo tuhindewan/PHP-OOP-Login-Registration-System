@@ -1,4 +1,6 @@
-<?php include 'inc/header.php';?>
+<?php include 'inc/header.php';
+Session::checkSession();
+?>
                   <div class="panel panel-default">
                           <div class="panel-heading">
                          <h2>User Profile <span class="pull-right"><a class="btn btn-primary" href="index.php">Back</a></span></h2>

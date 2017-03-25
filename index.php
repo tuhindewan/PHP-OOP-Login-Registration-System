@@ -2,7 +2,7 @@
 include 'inc/header.php';
 include 'lib/User.php';
 $user = new User();
-
+Session::checkSession();
 ?>
 
 <?php 
